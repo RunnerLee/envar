@@ -59,13 +59,9 @@ class DotEnv
             }
         }
 
-        try {
-            apache_setenv($name, $value);
-        }catch (\Exception $e) {}
+        function_exists('apache_setenv') && apache_setenv($name, $value);
 
-        try {
-            putenv("{$name}={$value}");
-        }catch (\Exception $e) {}
+        putenv("{$name}={$value}");
 
         $_ENV[$name] = $_SERVER[$name] = $value;
 

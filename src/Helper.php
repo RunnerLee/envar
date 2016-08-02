@@ -8,6 +8,9 @@
 if(!function_exists('envar')) {
     function envar($name, $default = '')
     {
-        
+        if(false === $value = getenv($name)) {
+            return $default;
+        }
+        return $value;
     }
 }

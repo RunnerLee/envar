@@ -7,8 +7,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$parser = new \Runner\DotEnv\Parser();
+$dotenv = new \Runner\DotEnv\DotEnv();
 
-$data = $parser->load(__DIR__ . '/.env');
 
-print_r($data);
+$dotenv->loadFromFile(__DIR__ . '/.env');

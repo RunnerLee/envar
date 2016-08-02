@@ -14,7 +14,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Runner\\DotEnv\\": "src/"
-        }
+            "Runner\\DotEnv\\": "src"
+        },
+        "files": [
+            "src/Helper.php"
+        ]
     }
 }
