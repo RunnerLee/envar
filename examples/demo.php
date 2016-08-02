@@ -11,3 +11,5 @@ $dotenv = new \Runner\DotEnv\DotEnv();
 
 
 $dotenv->loadFromFile(__DIR__ . '/.env');
+
+print_r(envar('APP_DEBUG'));

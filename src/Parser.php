@@ -20,7 +20,7 @@ class Parser
      * @return array
      * @throws \Exception
      */
-    public function load($filePath, $identification = true)
+    public function load($filePath, $identification = false)
     {
         if(!file_exists($filePath)) {
             throw new \Exception("{$filePath} is not exists");
@@ -46,7 +46,7 @@ class Parser
      * @param bool $identification
      * @return array|bool
      */
-    public function parseLine($line, $identification = true)
+    public function parseLine($line, $identification = false)
     {
         if('#' === substr($line, 0, 1)) {
             return false;
@@ -58,33 +58,7 @@ class Parser
 
         return [
             $name,
-            ($identification ? $this->identifyDataTypeOfValue($value) : $value),
+            ($identification ? identifyDataType($value) : $value),
         ];
     }
-
-
-    /**
-     * @param string $value
-     * @return bool|float|int|null
-     */
-    public function identifyDataTypeOfValue($value)
-    {
-        if(is_numeric($value)) {
-            if(false !== strpos($value, '.')) {
-                return floatval($value);
-            }
-            return intval($value);
-        }
-        if('false' === $value) {
-            return false;
-        }
-        if('true' === $value) {
-            return true;
-        }
-        if('null' === $value) {
-            return null;
-        }
-        return $value;
-    }
-
 }
