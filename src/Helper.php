@@ -24,7 +24,9 @@ if(!function_exists('identifyDataType')) {
             (('"' === $temp = substr($value, 0, 1)) || "'" === $temp) &&
             $temp === substr($value, -1)
         ) {
-            return substr($value, 1, -1);
+            if(in_array($temp = strtolower(substr($value, 1, -1)), ['false', 'true', 'null'])) {
+                return $temp;
+            }
         }
 
         return $value;

@@ -30,8 +30,11 @@ class Parser
 
         $file = new \SplFileObject($filePath);
 
-        while($line = $file->fgets()) {
-            if((!$line = trim($line)) || (false === $line = $this->parseLine($line, $identification))) {
+        while(!$file->eof()) {
+            if(
+                (!$line = trim($file->fgets())) ||
+                (false === $line = $this->parseLine($line, $identification))
+            ) {
                 continue;
             }
             $data[$line[0]] = $line[1];
@@ -55,6 +58,10 @@ class Parser
             return false;
         }
         list($name, $value) = array_map('trim', explode('=', $line, 2));
+
+        if(0 === preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]{0,99}$/', $name)) {
+            return false;
+        }
 
         return [
             $name,
