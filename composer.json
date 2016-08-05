@@ -6,6 +6,10 @@
         {
             "name": "runnerlee",
             "email": "runnerleer@gmail.com"
+        },
+        {
+            "name": "janhuang",
+            "email": "bboyjanhuang@gmail.com"
         }
     ],
     "require": {
@@ -14,10 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Runner\\DotEnv\\": "src"
-        },
-        "files": [
-            "src/Helper.php"
-        ]
+            "Runner\\Envar\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
     }
 }

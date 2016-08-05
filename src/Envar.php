@@ -6,13 +6,41 @@
  */
 namespace Runner\Envar;
 
-class DotEnv
+/**
+ * Class Envar
+ *
+ * @package Runner\Envar
+ */
+class Envar
 {
+    /**
+     * @var string
+     */
+    protected $suffix = '.env';
 
-    public function __construct()
+    /**
+     * @var array
+     */
+    private $environments = [];
+
+    /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
+     * Envar constructor.
+     *
+     * @param array $environments
+     */
+    public function __construct(array $environments = [])
     {
-    }
+        while (list(, $name) = each($environments)) {
+            $this->environments[$name] = getenv($name);
+        }
 
+        $this->config = $this->environments;
+    }
 
     /**
      * @param array $data
@@ -31,7 +59,6 @@ class DotEnv
         return $success;
     }
 
-
     /**
      * @param string $filePath
      * @param bool $overLoad
@@ -41,7 +68,6 @@ class DotEnv
     {
         return $this->loadFromArray((new Parser())->load($filePath), $overLoad);
     }
-
 
     /**
      * @param string $name
@@ -68,4 +94,24 @@ class DotEnv
         return true;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function set($name, $value)
+    {
+        $this->config[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return bool|mixed
+     */
+    public function get($name)
+    {
+        return isset($this->config[$name]) ? $this->config[$name] : false;
+    }
 }

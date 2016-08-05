@@ -5,26 +5,22 @@
  * @time: 16-8-3 上午9:05
  */
 
-namespace Runner\Envar\Tests;
+namespace Tests;
 
-
+use PHPUnit_Framework_TestCase;
 use Runner\Envar\Parser;
 
-class ParserTest extends \PHPUnit_Framework_TestCase
+class ParserTest extends PHPUnit_Framework_TestCase
 {
-
-
     /**
      * @var Parser
      */
     protected $parser;
 
-
     public function setUp()
     {
         $this->parser = new Parser();
     }
-
 
     public function testLineParser()
     {
@@ -43,14 +39,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadFile()
     {
-        $data = $this->parser->load(__DIR__ . '/../examples/envar.config');
+        $data = $this->parser->load(__DIR__ . '/.env');
 
         $this->assertEquals('true', $data['APP_DEBUG']);
 
-        $data = $this->parser->load(__DIR__ . '/../examples/envar.config', true);
+        $data = $this->parser->load(__DIR__ . '/.env', true);
 
         $this->assertSame(true, $data['APP_DEBUG']);
     }
-
-
 }

@@ -13,7 +13,6 @@ namespace Runner\Envar;
  */
 class Parser
 {
-
     /**
      * @param string $filePath
      * @param bool $identification
@@ -43,6 +42,35 @@ class Parser
         return $data;
     }
 
+    /**
+     * @param $value
+     * @return bool|float|int|null|string
+     */
+    protected function identifyDataType($value)
+    {
+        if(is_numeric($value)) {
+            if(false !== strpos($value, '.')) {
+                return floatval($value);
+            }
+            return intval($value);
+        }
+        switch (strtolower($value)) {
+            case 'false': return false;
+            case 'true': return true;
+            case 'null': return null;
+        }
+
+        if(
+            (('"' === $temp = substr($value, 0, 1)) || "'" === $temp) &&
+            $temp === substr($value, -1)
+        ) {
+            if(in_array($temp = strtolower(substr($value, 1, -1)), ['false', 'true', 'null'])) {
+                return $temp;
+            }
+        }
+
+        return $value;
+    }
 
     /**
      * @param string $line
@@ -65,7 +93,7 @@ class Parser
 
         return [
             $name,
-            ($identification ? identifyDataType($value) : $value),
+            ($identification ? $this->identifyDataType($value) : $value),
         ];
     }
 }
