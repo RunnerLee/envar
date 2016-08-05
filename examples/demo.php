@@ -7,9 +7,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new \Runner\DotEnv\DotEnv();
+(new \Runner\Envar\DotEnv())->loadFromFile(__DIR__ . '/envar.config');
 
-
-$dotenv->loadFromFile(__DIR__ . '/.env');
-
-var_dump(envar('APP_DEBUG'));
+envar('DB_USERNAME');

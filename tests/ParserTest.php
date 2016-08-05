@@ -5,10 +5,10 @@
  * @time: 16-8-3 上午9:05
  */
 
-namespace Runner\DotEnv\Tests;
+namespace Runner\Envar\Tests;
 
 
-use Runner\DotEnv\Parser;
+use Runner\Envar\Parser;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,11 +43,11 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadFile()
     {
-        $data = $this->parser->load(__DIR__ . '/../examples/.env');
+        $data = $this->parser->load(__DIR__ . '/../examples/envar.config');
 
         $this->assertEquals('true', $data['APP_DEBUG']);
 
-        $data = $this->parser->load(__DIR__ . '/../examples/.env', true);
+        $data = $this->parser->load(__DIR__ . '/../examples/envar.config', true);
 
         $this->assertSame(true, $data['APP_DEBUG']);
     }

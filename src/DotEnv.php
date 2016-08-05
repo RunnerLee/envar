@@ -4,7 +4,7 @@
  * @email: runnerleer@gmail.com
  * @time: 16-8-2 下午4:46
  */
-namespace Runner\DotEnv;
+namespace Runner\Envar;
 
 class DotEnv
 {

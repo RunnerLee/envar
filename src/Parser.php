@@ -5,7 +5,7 @@
  * @time: 16-8-2 下午9:20
  */
 
-namespace Runner\DotEnv;
+namespace Runner\Envar;
 
 /**
  * Class Parser

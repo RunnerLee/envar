@@ -5,9 +5,9 @@
  * @time: 16-8-3 上午9:32
  */
 
-namespace Runner\DotEnv\Tests;
+namespace Runner\Envar\Tests;
 
-use Runner\DotEnv\DotEnv;
+use Runner\Envar\DotEnv;
 
 class DotEnvTest extends \PHPUnit_Framework_TestCase
 {
