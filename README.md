@@ -4,7 +4,7 @@
 
 ### 安装
 ```
-composer require runner/dotenv
+composer require runner/envar
 ```
 
 ### 使用
