@@ -17,6 +17,14 @@ composer require runner/envar
 
 所以，如果想使用字符串的 `false` / `true` / `null` 的话，可以使用引号将值包起来。例如：`APP_DEBUG="true"`
 
+```
+$envar = new Envar(['LANG']); // 读取系统环境变量配置
+
+$envar->load(__DIR__ . '/.env'); // 读取会话环境变量配置, 会覆盖重复的变量
+
+$envar->get('LANG'); // gbk
+```
+
 ### Testing
 
 ```
