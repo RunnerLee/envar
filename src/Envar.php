@@ -14,19 +14,9 @@ namespace Runner\Envar;
 class Envar
 {
     /**
-     * @var string
-     */
-    protected $suffix = '.env';
-
-    /**
      * @var array
      */
     private $environments = [];
-
-    /**
-     * @var array
-     */
-    protected $config = [];
 
     /**
      * Envar constructor.
@@ -38,8 +28,15 @@ class Envar
         while (list(, $name) = each($environments)) {
             $this->environments[$name] = getenv($name);
         }
+    }
 
-        $this->config = $this->environments;
+    /**
+     * @param $file
+     * @return array
+     */
+    public function load($file)
+    {
+        return $this->loadFromArray((new Parser())->load($file), true);
     }
 
     /**
@@ -47,26 +44,18 @@ class Envar
      * @param bool $overLoad
      * @return array
      */
-    public function loadFromArray(array $data, $overLoad = true)
+    protected function loadFromArray(array $data, $overLoad = true)
     {
         $success = [];
+
         while(list($name, $value) = each($data)) {
             if($this->setEnv($name, $value, $overLoad)) {
                 $success[$name] = $value;
+                $this->environments[$name] = $value;
             }
         }
 
         return $success;
-    }
-
-    /**
-     * @param string $filePath
-     * @param bool $overLoad
-     * @return array
-     */
-    public function loadFromFile($filePath, $overLoad = true)
-    {
-        return $this->loadFromArray((new Parser())->load($filePath), $overLoad);
     }
 
     /**
@@ -75,7 +64,7 @@ class Envar
      * @param bool $overLoad
      * @return bool
      */
-    public function setEnv($name, $value, $overLoad = true)
+    protected function setEnv($name, $value, $overLoad = true)
     {
         if(!$overLoad) {
             switch (true) {
@@ -101,7 +90,7 @@ class Envar
      */
     public function set($name, $value)
     {
-        $this->config[$name] = $value;
+        $this->environments[$name] = $value;
 
         return $this;
     }
@@ -112,6 +101,6 @@ class Envar
      */
     public function get($name)
     {
-        return isset($this->config[$name]) ? $this->config[$name] : false;
+        return isset($this->environments[$name]) ? $this->environments[$name] : false;
     }
 }

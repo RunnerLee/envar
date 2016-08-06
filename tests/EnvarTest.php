@@ -20,4 +20,15 @@ class EnvarTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('zh_CN.UTF-8', $envar->get('LANG'));
     }
+
+    public function testMixEnv()
+    {
+        $envar = new Envar(['LANG']);
+
+        $this->assertEquals('zh_CN.UTF-8', $envar->get('LANG'));
+
+        $envar->load(__DIR__ . '/.env');
+
+        $this->assertEquals('gbk', $envar->get('LANG'));
+    }
 }
