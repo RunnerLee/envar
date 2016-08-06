@@ -30,5 +30,8 @@ class EnvarTest extends \PHPUnit_Framework_TestCase
         $envar->load(__DIR__ . '/.env');
 
         $this->assertEquals('gbk', $envar->get('LANG'));
+
+        $this->assertTrue($envar->get('APP_DEBUG'));
+        $this->assertEquals('true', $envar->get('APP_DEBUG_STRING'));
     }
 }

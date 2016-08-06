@@ -25,6 +25,7 @@ class Envar
      */
     public function __construct(array $environments = [])
     {
+
         while (list(, $name) = each($environments)) {
             $this->environments[$name] = getenv($name);
         }
@@ -36,7 +37,7 @@ class Envar
      */
     public function load($file)
     {
-        return $this->loadFromArray((new Parser())->load($file), true);
+        return $this->loadFromArray((new Parser())->load($file, true), true);
     }
 
     /**
