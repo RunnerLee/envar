@@ -25,13 +25,13 @@ class Envar
      * @param $file
      * @return array
      */
-    public function loadFileConfigToSessionEnv($file)
+    public function loadFromFile($file)
     {
-        return $this->loadArrayToSessionEnv(Parser::load($file), true);
+        return $this->loadFromArray(Parser::load($file), true);
     }
 
 
-    public function loadArrayToSessionEnv(array $data, $overLoad = true)
+    public function loadFromArray(array $data, $overLoad = true)
     {
         while(list($name, $value) = each($data)) {
             if(!$this->setSessionEnvironment($name, $value, $overLoad)) {
@@ -40,16 +40,6 @@ class Envar
         }
 
         return $data;
-    }
-
-
-    public function loadFileConfigToSystemEnv($file, $prefix)
-    {
-        $data = Parser::load($file);
-
-
-
-        
     }
 
 
