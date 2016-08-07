@@ -39,7 +39,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
 
     public function testLoadFile()
     {
-        $data = $this->parser->load(__DIR__ . '/.env');
+        $data = $this->parser->load(__DIR__ . '/envar.private');
 
         $this->assertEquals('true', $data['APP_DEBUG']);
 

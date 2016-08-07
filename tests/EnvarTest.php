@@ -27,7 +27,7 @@ class EnvarTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('zh_CN.UTF-8', $envar->get('LANG'));
 
-        $envar->load(__DIR__ . '/.env');
+        $envar->load(__DIR__ . '/envar.private');
 
         $this->assertEquals('gbk', $envar->get('LANG'));
 
