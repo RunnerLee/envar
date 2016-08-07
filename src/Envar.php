@@ -13,21 +13,11 @@ namespace Runner\Envar;
  */
 class Envar
 {
-    /**
-     * @var array
-     */
-    private $environments = [];
 
-    /**
-     * Envar constructor.
-     *
-     * @param array $environments
-     */
-    public function __construct(array $environments = [])
+    public function __construct()
     {
-
-        while (list(, $name) = each($environments)) {
-            $this->environments[$name] = getenv($name);
+        if (!function_exists('putenv')) {
+            throw new \Exception('function putenv has been disabled');
         }
     }
 
@@ -35,29 +25,31 @@ class Envar
      * @param $file
      * @return array
      */
-    public function load($file)
+    public function loadFileConfigToSessionEnv($file)
     {
-        return $this->loadFromArray((new Parser())->load($file, true), true);
+        return $this->loadArrayToSessionEnv(Parser::load($file), true);
     }
 
-    /**
-     * @param array $data
-     * @param bool $overLoad
-     * @return array
-     */
-    protected function loadFromArray(array $data, $overLoad = true)
-    {
-        $success = [];
 
+    public function loadArrayToSessionEnv(array $data, $overLoad = true)
+    {
         while(list($name, $value) = each($data)) {
-            if($this->setEnv($name, $value, $overLoad)) {
-                $success[$name] = $value;
-                $this->environments[$name] = $value;
+            if(!$this->setSessionEnvironment($name, $value, $overLoad)) {
+                unset($data[$name]);
             }
         }
 
-        return $success;
+        return $data;
     }
+
+
+    public function loadFileConfigToSystemEnv($file)
+    {
+        $data = Parser::load($file);
+
+        
+    }
+
 
     /**
      * @param string $name
@@ -65,7 +57,7 @@ class Envar
      * @param bool $overLoad
      * @return bool
      */
-    protected function setEnv($name, $value, $overLoad = true)
+    public function setSessionEnvironment($name, $value, $overLoad = true)
     {
         if(!$overLoad) {
             switch (true) {
@@ -82,26 +74,5 @@ class Envar
         $_ENV[$name] = $_SERVER[$name] = $value;
 
         return true;
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     * @return $this
-     */
-    public function set($name, $value)
-    {
-        $this->environments[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param $name
-     * @return bool|mixed
-     */
-    public function get($name)
-    {
-        return isset($this->environments[$name]) ? $this->environments[$name] : false;
     }
 }
