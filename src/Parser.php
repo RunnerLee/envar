@@ -9,10 +9,11 @@ namespace Runner\Envar;
 
 /**
  * Class Parser
- * @package Runner\DotEnv
+ * @package Runner\Envar
  */
 class Parser
 {
+
     /**
      * @param string $filePath
      * @param bool $identification
@@ -42,8 +43,9 @@ class Parser
         return $data;
     }
 
+
     /**
-     * @param $value
+     * @param string $value
      * @return bool|float|int|null|string
      */
     public static function identifyDataType($value)
@@ -71,6 +73,7 @@ class Parser
 
         return $value;
     }
+
 
     /**
      * @param string $line

@@ -8,12 +8,15 @@ namespace Runner\Envar;
 
 /**
  * Class Envar
- *
  * @package Runner\Envar
  */
 class Envar
 {
 
+    /**
+     * Envar constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         if (!function_exists('putenv')) {
@@ -22,7 +25,7 @@ class Envar
     }
 
     /**
-     * @param $file
+     * @param string $file
      * @return array
      */
     public function loadFromFile($file)
@@ -45,7 +48,7 @@ class Envar
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param string|integer|float $value
      * @param bool $overLoad
      * @return bool
      */
